@@ -1,0 +1,44 @@
+# frameworks
+.DS_Store
+.benchmarks
+.coverage
+.cache
+.idea
+.pytest_cache
+.tmp
+.tox
+.vagrant
+.vscode
+
+*.mo
+**.pyc
+**__pycache__
+
+**.egg-info
+
+db/
+db.sqlite3
+db.sqlite3-local
+
+.vscode/**
+
+locale/*/LC_MESSAGES/django.po
+local.py
+local_settings.py
+settings_local.py
+local.py
+
+# local media
+media/
+
+# python venv
+.venv
+venv
+
+# pyenv
+.python-version
+
+dist/
+logs/
+
+.env

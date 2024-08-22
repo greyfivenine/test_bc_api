@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  pg_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    networks:
+      - django_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: website.settings
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_HOST: pg_db
+    depends_on:
+      pg_db:
+        condition: service_healthy
+    networks:
+      - django_network
+
+volumes:
+  postgres_data:
+
+networks:
+  django_network:
